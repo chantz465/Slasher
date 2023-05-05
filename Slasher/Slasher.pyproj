@@ -22,9 +22,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="level.py" />
     <Compile Include="debug.py" />
+    <Compile Include="player.py" />
     <Compile Include="settings.py" />
     <Compile Include="Slasher.py" />
+    <Compile Include="tile.py" />
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
