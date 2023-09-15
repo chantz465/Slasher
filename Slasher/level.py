@@ -4,6 +4,7 @@ from settings import *
 from tile import Tile
 from player import Player
 from support import *
+from random import choice 
 
 
 class Level:
@@ -13,15 +14,23 @@ class Level:
 
         # sprite group setup
         self.visible_sprites = YSortCameraGroup()
-        self.obstacles_sprites = pygame.sprite.Group()
+        self.obstacle_sprites = pygame.sprite.Group()
 
         # sprite setup
         self.create_map()
 
     def create_map(self):
         layouts = {
-                'boundary' : import_csv_layout('../map/map_FloorBlocks.csv')
+                'boundary' : import_csv_layout('../map/map_FloorBlocks.csv'),
+                'grass' : import_csv_layout('../map/map_Grass.csv'),
+                #'object' : import_csv_layout('../map/map_Objects.csv'),
             }
+        graphics = {
+            'grass': import_folder('../graphics/Grass')
+        }
+
+
+
         for style,layout in layouts.items():
             for row_index, row in enumerate(layout):
                 for col_index, col in enumerate(row):
@@ -29,12 +38,19 @@ class Level:
                         x = col_index * TILESIZE
                         y = row_index * TILESIZE
                         if style == 'boundary' :
-                            Tile((x,y),[self.obstacles_sprites],'invisible')
+                            Tile((x,y),[self.obstacle_sprites],'invisible')
+                        if style == 'grass':
+                            random_grass_image = choice(graphics['grass'])
+                            Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'grass',random_grass_image)
+
+
+                        #if style == 'object';
+                        #    pass
         #        if col == 'x' :
         #            Tile((x,y),[self.visible_sprites,self.obstacles_sprites])
         #        if col == 'p' :
         #            self.player = Player((x,y),[self.visible_sprites],self.obstacles_sprites)
-        self.player = Player((2000,1430),[self.visible_sprites],self.obstacles_sprites)
+        self.player = Player((2000,1430),[self.visible_sprites],self.obstacle_sprites)
 
     def run(self):
         # update and draw the game
