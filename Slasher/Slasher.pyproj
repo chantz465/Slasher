@@ -27,6 +27,7 @@
     <Compile Include="player.py" />
     <Compile Include="settings.py" />
     <Compile Include="Slasher.py" />
+    <Compile Include="support.py" />
     <Compile Include="tile.py" />
   </ItemGroup>
   <ItemGroup>
