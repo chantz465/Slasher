@@ -1,6 +1,7 @@
 import pygame 
 from settings import *
 from support import import_folder
+import time
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self,pos,groups,obstacle_sprites):
@@ -22,7 +23,7 @@ class Player(pygame.sprite.Sprite):
 		self.speed = 5
 		self.attacking = False
 		self.attack_cooldown = 400
-		self.attack_time = 0
+		self.attack_time = None
 
 		self.obstacle_sprites = obstacle_sprites
 
@@ -46,51 +47,52 @@ class Player(pygame.sprite.Sprite):
 			if keys[pygame.K_w] and not self.attacking:
 				self.direction.y = -1
 				self.status = 'up'
-			elif keys[pygame.K_s] and not self.attacking:
+			elif keys[pygame.K_s]and not self.attacking:
 				self.direction.y = 1
 				self.status = 'down'
 			else:
 				self.direction.y = 0
 
-			if keys[pygame.K_d] and not self.attacking:
+			if keys[pygame.K_d]and not self.attacking:
 				self.direction.x = 1
 				self.status = 'right'
-			elif keys[pygame.K_a] and not self.attacking:
+			elif keys[pygame.K_a]and not self.attacking:
 				self.direction.x = -1
 				self.status = 'left'
 			else:
 				self.direction.x = 0
 
 			# attack input
-			if keys[pygame.K_SPACE]:
+			if keys[pygame.K_SPACE]and not self.attacking:
 				self.attacking = True
 				self.attack_time = pygame.time.get_ticks()
 				print('attack')
 
 			# magic input
-			if keys[pygame.K_LCTRL]:
+			if keys[pygame.K_LCTRL]and not self.attacking:
 				self.attacking = True
 				self.attack_time = pygame.time.get_ticks()
-				print('Magic')
+				print('magic')
+
 
 	def get_status(self):
-	
-		#idle status
+
+		# idle status
 		if self.direction.x == 0 and self.direction.y == 0:
 			if not 'idle' in self.status and not 'attack' in self.status:
 				self.status = self.status + '_idle'
 
-			if self.attacking:
-				self.direction.x = 0
-				self.direction.y = 0
-				if not 'attack' in self.status:
-					if 'idle' in self.status:
-						self.status = self.status.replace('_idle','_attack')
-					else:
-						self.status = self.status + '_attack'
-			else:
-				if 'attack' in self.status:
-					self.status = self.status.replace('_attack','')
+		if self.attacking:
+			self.direction.x = 0
+			self.direction.y = 0
+			if not 'attack' in self.status:
+				if 'idle' in self.status:
+					self.status = self.status.replace('_idle','_attack')
+				else:
+					self.status = self.status + '_attack'
+		else:
+			if 'attack' in self.status:
+				self.status = self.status.replace('_attack','')
 
 	def move(self,speed):
 		if self.direction.magnitude() != 0:
