@@ -1,4 +1,5 @@
 import pygame, sys
+
 from settings import *
 from level import Level
 
@@ -8,6 +9,7 @@ class Game:
 		# general setup
 		pygame.init()
 		self.screen = pygame.display.set_mode((WIDTH,HEIGTH))
+		
 		pygame.display.set_caption('Slasher')
 		self.clock = pygame.time.Clock()
 
