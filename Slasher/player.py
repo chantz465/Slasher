@@ -1,14 +1,14 @@
 import pygame 
 from settings import *
 from support import import_folder
-import time
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self,pos,groups,obstacle_sprites,create_attack):
+	def __init__(self,pos,groups,obstacle_sprites,create_attack,destory_attack):
 		super().__init__(groups)
 		self.image = pygame.image.load('../graphics/test/player.png').convert_alpha()
 		self.rect = self.image.get_rect(topleft = pos)
 		self.hitbox = self.rect.inflate(0,-26)
+
 
 		#graphics setup
 		self.import_player_assets()
@@ -24,9 +24,17 @@ class Player(pygame.sprite.Sprite):
 		self.attacking = False
 		self.attack_cooldown = 400
 		self.attack_time = None
-		self.create_attack = create_attack
+		
 
 		self.obstacle_sprites = obstacle_sprites
+
+
+		# weapon
+		self.create_attack = create_attack
+		self.destory_attack = destory_attack
+		self.weapon_index = 0
+		self.weapon = list(weapon_data.keys())[self.weapon_index]
+
 
 
 	def import_player_assets(self):
@@ -144,6 +152,7 @@ class Player(pygame.sprite.Sprite):
 		if self.attacking:
 			if current_time - self.attack_time >= self.attack_cooldown:
 				self.attacking = False
+				self.destory_attack()
 
 	def update(self):
 		self.input()
