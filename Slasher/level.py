@@ -4,7 +4,8 @@ from settings import *
 from tile import Tile
 from player import Player
 from support import *
-from random import choice 
+from random import choice
+from weapon import Weapon
 
 
 class Level:
@@ -18,6 +19,11 @@ class Level:
 
         # sprite setup
         self.create_map()
+
+
+
+    def create_attack(self):
+        Weapon(self.player,[self.visible_sprites])
 
     def create_map(self):
         layouts = {
@@ -52,7 +58,12 @@ class Level:
         #            Tile((x,y),[self.visible_sprites,self.obstacles_sprites])
         #        if col == 'p' :
         #            self.player = Player((x,y),[self.visible_sprites],self.obstacles_sprites)
-        self.player = Player((2000,1430),[self.visible_sprites],self.obstacle_sprites)
+        self.player = Player((2000,1430),[self.visible_sprites],self.obstacle_sprites,self.create_attack)
+
+
+        
+
+
 
     def run(self):
         # update and draw the game
