@@ -29,6 +29,7 @@
     <Compile Include="Slasher.py" />
     <Compile Include="support.py" />
     <Compile Include="tile.py" />
+    <Compile Include="ui.py" />
     <Compile Include="weapon.py" />
   </ItemGroup>
   <ItemGroup>
