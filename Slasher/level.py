@@ -7,6 +7,7 @@ from support import *
 from random import choice
 from weapon import Weapon
 from ui import UI
+from enemy import Enemy
 
 
 class Level:
@@ -50,6 +51,7 @@ class Level:
                 'boundary' : import_csv_layout('../map/map_FloorBlocks.csv'),
                 'grass' : import_csv_layout('../map/map_Grass.csv'),
                 'object' : import_csv_layout('../map/map_Objects.csv'),
+                'entities' : import_csv_layout('../map/map_Entities.csv')
             }
         graphics = {
             'grass': import_folder('../graphics/Grass'),
@@ -74,17 +76,22 @@ class Level:
                         if style == 'object':
                             surface = graphics['objects'][int(col)]
                             Tile((x,y),[self.visible_sprites,self.obstacle_sprites],'object',surface)
-        #        if col == 'x' :
-        #            Tile((x,y),[self.visible_sprites,self.obstacles_sprites])
-        #        if col == 'p' :
-        #            self.player = Player((x,y),[self.visible_sprites],self.obstacles_sprites)
-        self.player = Player((2000,1430),
-                             [self.visible_sprites],
-                             self.obstacle_sprites,
-                             self.create_attack,
-                             self.destory_attack,
-                             self.create_magic)
 
+                        if style == 'entities':
+                            if col == '394':
+                                self.player = Player(
+                                     (x,y),
+                                     [self.visible_sprites],
+                                     self.obstacle_sprites,
+                                     self.create_attack,
+                                     self.destory_attack,
+                                     self.create_magic)
+                            else:
+                                if col == '390': monster_name = 'bamboo'
+                                elif col == '391': monster_name = 'spirit'
+                                elif col == '392': monster_name ='raccoon'
+                                else: monster_name = 'squid'
+                                Enemy(monster_name,(x,y),[self.visible_sprites])
 
         
 
