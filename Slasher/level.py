@@ -115,7 +115,8 @@ class Level:
                                       (x,y),
                                       [self.visible_sprites,
                                       self.attackable_sprites],
-                                      self.obstacle_sprites)
+                                      self.obstacle_sprites,
+                                      self.damage_player)
 
         
 
@@ -128,6 +129,14 @@ class Level:
         self.visible_sprites.enemy_update(self.player)
         self.player_attack_logic()
         self.ui.display(self.player)
+
+
+    def damage_player(self,amount,attack_type):
+        if self.player.vulnerable:
+            self.player.health -= amount
+            self.player.vulnerable = False
+            self.player.hurt_time = pygame.time.get_ticks()
+
         
 
 class YSortCameraGroup(pygame.sprite.Group):
