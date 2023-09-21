@@ -97,7 +97,13 @@ class Enemy(Entity):
         self.image = animation[int(self.frame_index)]
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
+
+    def hit_reaction(self):
+        if not self.vulnerable:
+            self.direction *= -self.resistance
+
     def update(self):
+        self.hit_reaction()
         self.move(self.speed)
         self.animate()
         self.cooldowns()
@@ -120,6 +126,7 @@ class Enemy(Entity):
 
     def get_damage(self,player,attack_type):
         if self.vulnerable:
+            self.direction = self.get_player_distance_direction(player)[1]
             if attack_type == 'weapon':
                 self.health -= player.get_full_weapon_damage()
             else:
