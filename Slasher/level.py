@@ -8,6 +8,7 @@ from random import choice
 from weapon import Weapon
 from ui import UI
 from enemy import Enemy
+from particles import AnimationPlayer
 
 
 class Level:
@@ -29,6 +30,8 @@ class Level:
 
         # user interface
         self.ui = UI()
+
+        self.animation_player = AnimationPlayer()
 
 
 
@@ -53,6 +56,8 @@ class Level:
                 if collision_sprites:
                     for target_sprite in collision_sprites:
                         if target_sprite.sprite_type == 'grass':
+                            pos = target_sprite.rect.center
+                            self.animation_player.create_grass_particles(pos,[self.visiable_sprites])
                             target_sprite.kill()
                         else:
                             target_sprite.get_damage(self.player,attack_sprite.sprite_type)
