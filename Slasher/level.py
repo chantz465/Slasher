@@ -69,7 +69,7 @@ class Level:
                             pos = target_sprite.rect.center
                             offset = pygame.math.Vector2(0,75)
                             for leaf in range(randint(3,6)):
-                                self.animation_player.create_grass_particles(pos - offset,[self.visible_sprites])
+                                    self.animation_player.create_grass_particles(pos - offset,[self.visible_sprites])
                             target_sprite.kill()
                         else:
                             target_sprite.get_damage(self.player,attack_sprite.sprite_type)
@@ -145,6 +145,8 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.ui.display(self.player)
+
+
         if self.game_paused:
             self.upgrade.display()
 
@@ -210,3 +212,5 @@ class YSortCameraGroup(pygame.sprite.Group):
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
             self.display_surface.blit(sprite.image,offset_pos)
+
+    
