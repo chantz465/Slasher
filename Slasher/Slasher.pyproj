@@ -26,6 +26,7 @@
     <Compile Include="entity.py" />
     <Compile Include="level.py" />
     <Compile Include="debug.py" />
+    <Compile Include="magic.py" />
     <Compile Include="particles.py" />
     <Compile Include="player.py" />
     <Compile Include="settings.py" />
